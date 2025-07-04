@@ -1,3 +1,4 @@
+// Optimized generateQuestions function
 async function generateQuestions() {
     const context = document.getElementById('contextInput').value;
     const generateButton = document.getElementById('generateButton');
@@ -8,136 +9,120 @@ async function generateQuestions() {
     }
 
     generateButton.innerText = 'Loading...';
-    showLoadingMessage('Connecting to AI model...');
 
     try {
-        // Use smart fetch with fallback
-        const response = await fetchHFSpaces('/api/generate', {
+        // Use optimized HF Spaces fetch (direct first)
+        const response = await fetchHFSpaces('/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ context })
-        }, true); // Enable direct fallback
+        });
 
         if (!response.ok) {
             throw new Error(`Server error: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
-        showLoadingMessage('Questions generated successfully!');
+        
+        // Success feedback
+        showLoadingMessage('✅ Questions generated successfully!');
+        
+        console.log('Generated questions:', data.question_answer);
 
         // Store questions and answers in variables
         const questions = data.question_answer.map(q => q.question);
         const answers = data.question_answer.map(q => q.answer);
 
-        // Store in localStorage and redirect
+        // Store in localStorage
         localStorage.setItem('question_answer', JSON.stringify(questions));
         localStorage.setItem('answers', JSON.stringify(answers));
         localStorage.setItem('passage', context);
         
         // Small delay to show success message
         setTimeout(() => {
+            hideLoadingMessage();
             window.location.href = 'display_question_answer.html';
-        }, 1000);
+        }, 1500);
 
     } catch (error) {
         console.error('Error:', error);
+        hideLoadingMessage();
         
-        // More specific error messages
-        let errorMessage = 'Error generating questions. ';
+        // User-friendly error messages
+        let errorMessage = '';
         
-        if (error.message.includes('502')) {
-            errorMessage += 'The AI model is starting up. Please wait 2-3 minutes and try again.';
-        } else if (error.message.includes('timeout')) {
-            errorMessage += 'Request timed out. The AI model might be loading. Please try again.';
-        } else if (error.message.includes('Failed to fetch')) {
-            errorMessage += 'Network connection issue. Please check your internet connection.';
+        if (error.message.includes('timed out') || error.message.includes('starting up')) {
+            errorMessage = 'The AI model is starting up. This usually takes 1-2 minutes on first use. Please try again.';
+        } else if (error.message.includes('Network connection')) {
+            errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+        } else if (error.message.includes('502') || error.message.includes('Bad Gateway')) {
+            errorMessage = 'The AI service is temporarily busy. Please wait a moment and try again.';
         } else {
-            errorMessage += 'Please try again in a few moments.';
+            errorMessage = 'Error generating questions. Please try again with different text or check your internet connection.';
         }
         
-        alert(errorMessage);
-        hideLoadingMessage();
+        // Enhanced error dialog
+        showErrorDialog(errorMessage);
+        
     } finally {
         generateButton.innerText = 'Generate';
     }
 }
 
-// Retry function for handling cold starts
-async function fetchWithRetry(url, options, retries = 3) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            showLoadingMessage(`Attempt ${i + 1}/${retries}: Connecting to AI model...`);
-            
-            // Increase timeout for each retry
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), (30 + i * 30) * 1000); // 30s, 60s, 90s
-            
-            const response = await fetch(url, {
-                ...options,
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            
-            if (response.ok) {
-                showLoadingMessage('AI model connected! Generating questions...');
-                return response;
-            }
-            
-            // If 502/503 and not last retry, wait and try again
-            if ((response.status === 502 || response.status === 503) && i < retries - 1) {
-                showLoadingMessage(`AI model starting up... Retrying in ${(i + 1) * 10} seconds...`);
-                await new Promise(resolve => setTimeout(resolve, (i + 1) * 10000)); // 10s, 20s, 30s
-                continue;
-            }
-            
-            return response;
-            
-        } catch (error) {
-            if (error.name === 'AbortError') {
-                showLoadingMessage('Request timed out, retrying...');
-            }
-            
-            if (i === retries - 1) {
-                throw error;
-            }
-            
-            // Wait before retry
-            await new Promise(resolve => setTimeout(resolve, 5000));
-        }
+// Enhanced error dialog
+function showErrorDialog(message) {
+    // Remove existing error dialog
+    const existingDialog = document.getElementById('error-dialog');
+    if (existingDialog) {
+        existingDialog.remove();
     }
-}
-
-// Helper functions for better UX
-function showLoadingMessage(message) {
-    let loadingDiv = document.getElementById('loading-message');
-    if (!loadingDiv) {
-        loadingDiv = document.createElement('div');
-        loadingDiv.id = 'loading-message';
-        loadingDiv.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
+    
+    const errorDialog = document.createElement('div');
+    errorDialog.id = 'error-dialog';
+    errorDialog.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        z-index: 10000;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        font-family: 'Comic Neue', cursive;
+        backdrop-filter: blur(10px);
+    `;
+    
+    errorDialog.innerHTML = `
+        <div style="font-size: 48px; margin-bottom: 15px;">⚠️</div>
+        <div style="font-weight: bold; font-size: 18px; margin-bottom: 15px;">Oops! Something went wrong</div>
+        <div style="font-size: 16px; line-height: 1.5; margin-bottom: 20px;">${message}</div>
+        <button onclick="document.getElementById('error-dialog').remove()" style="
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 9999;
-            text-align: center;
-            max-width: 300px;
-        `;
-        document.body.appendChild(loadingDiv);
-    }
-    loadingDiv.textContent = message;
-    loadingDiv.style.display = 'block';
-}
-
-function hideLoadingMessage() {
-    const loadingDiv = document.getElementById('loading-message');
-    if (loadingDiv) {
-        loadingDiv.style.display = 'none';
-    }
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+            Try Again
+        </button>
+    `;
+    
+    document.body.appendChild(errorDialog);
+    
+    // Auto-close after 8 seconds
+    setTimeout(() => {
+        if (document.getElementById('error-dialog')) {
+            errorDialog.remove();
+        }
+    }, 8000);
 }
