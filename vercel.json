@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "elementary-quiz-generator-frontend",
+  "name": "t5-qg-frontend",
   "cleanUrls": true,
   "rewrites": [
     {
@@ -10,44 +10,6 @@
     {
       "source": "/api/generate-distractors", 
       "destination": "https://befancy10-t5-qg-grade34.hf.space/generate-distractors"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/select_role",
-      "dest": "/select_role.html"
-    },
-    {
-      "src": "/user_input",
-      "dest": "/user_input.html"
-    },
-    {
-      "src": "/user_key_input", 
-      "dest": "/user_key_input.html"
-    },
-    {
-      "src": "/display_question_answer",
-      "dest": "/display_question_answer.html"
-    },
-    {
-      "src": "/get_crosswords",
-      "dest": "/get_crosswords.html"
-    },
-    {
-      "src": "/get_mcq",
-      "dest": "/get_mcq.html"
-    },
-    {
-      "src": "/leaderboard",
-      "dest": "/leaderboard.html"
-    },
-    {
-      "src": "/leaderboard_mcq",
-      "dest": "/leaderboard_mcq.html"
     }
   ]
 }
