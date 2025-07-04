@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Data</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap">
+    <link href="./css/get_crosswords.css" rel="stylesheet">
+</head>
+<body>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/UBWtNCBOsQZypcOj/scene.splinecode"></spline-viewer>
+    <div class="text-input">
+        <h1>Generated crossword</h1>
+    </div>
+    <textarea id="key" style="display: none;"></textarea>
+    <textarea id="val" style="display: none;"></textarea>
+
+    <div id="nameStudent"></div>
+    <div id="keyGenerated"></div>
+    <div id="passageResult"></div>
+    <div id="crosswordsDiv"></div>
+    <div id="result" style="display: none;"></div>
+    <div id="button-container">
+        <button id="showCrossword">Show</button>
+        <button id="checkCondition" style="display: none;">Submit</button>
+    </div>
+
+    <div id="crosswordFinished" class="modal">
+        <div class="modal-content">
+            <h2>You Win</h2>
+            <button id="okayButton">Okay</button>
+            <button id="viewLeaderboard" style="margin-top: 1%;">View Leaderboard</button>
+        </div>
+    </div>
+
+    <div id="crosswordNotFinished" class="modal">
+        <div class="modal-content">
+            <h2>The Input Still Incorrect</h2>
+            <button id="okayButtonIncorect">Okay</button>
+        </div>
+    </div>
+
+    <div id="crosswordIsEmpty" class="modal">
+        <div class="modal-content">
+            <h2>The Input Still Empty</h2>
+            <button id="okayButtonEmpty">Okay</button>
+        </div>
+    </div>
+
+    <script src="./js/display_question_answer_crossword.js"></script>
+    <script src="./js/index_generated.js"></script>
+</body>
+</html>

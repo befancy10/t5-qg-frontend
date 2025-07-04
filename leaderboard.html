@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Crossword Leaderboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="./css/leaderboard.css">
+    <link rel="stylesheet" href="./css/user_key_input.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Leaderboard</h1>
+        <div class="key-input-grid">
+            <input type="text" class="key-input key-input-first" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+        </div>
+        <button onclick="fetchLeaderboard()">Get Leaderboard</button>
+    </div>
+
+    <!-- Full Screen Leaderboard Overlay -->
+    <div id="leaderboardOverlay">
+        <div class="stars" id="starsContainer"></div>
+        <button class="back-button" onclick="closeLeaderboard()">← Back</button>
+        <div id="leaderboardContent">
+            <div class="leaderboard-header">
+                <div class="leaderboard-title" id="overlayTitle">Leaderboard</div>
+                <div class="leaderboard-key" id="overlayKey">Key: -</div>
+            </div>
+            <div id="overlayLeaderboard"></div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner for Overlay -->
+    <div id="overlaySpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="spinner" class="loader"></div>
+
+    <script src="./js/display_leaderboard.js"></script>
+</body>
+</html>

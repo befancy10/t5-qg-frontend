@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Input Key</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="./css/user_key_input.css">
+</head>
+<body>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.97/build/spline-viewer.js"></script>
+    <spline-viewer url="https://prod.spline.design/Q7N2hNd3WKtU0o5y/scene.splinecode"></spline-viewer>
+    <div class="background-english"></div>
+    <div id="container">
+        <div class="text-input">
+            <h1>Your Name and Input Generated Key</h1>
+        </div>
+        <textarea id="context-input-name" placeholder="Enter Your Name"></textarea>
+        <div class="key-input-grid">
+            <input type="text" class="key-input key-input-first" placeholder="-" maxlength="1">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+            <input type="text" class="key-input" maxlength="1" placeholder="-">
+        </div>
+        <button onclick="fetchKeyAndName()">Submit</button>
+    </div>
+    <div id="spinner" class="loader"></div>
+    <div id="nameFoundModal" class="modal">
+        <div class="modal-content">
+            <h2>Name Found</h2>
+            <p>Your name already used. Do you want to proceed with this name?</p>
+            <button id="proceedBtn">Proceed</button>
+            <button id="cancelBtn">Cancel</button>
+        </div>
+    </div>
+    <div id="alreadyFinished" class="modal">
+        <div class="modal-content">
+            <p>You have completed the crossword using this name</p>
+            <button id="okayBtn">Okay</button>
+        </div>
+    </div>
+    <script src="./js/fetch_key_name.js"></script>
+    <script src="./js/load_example.js"></script>
+    <script src="./js/key_input.js"></script>
+</body>
+</html>

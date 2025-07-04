@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Crossword Quest</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Press+Start+2P&display=swap">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: #1a0d2e;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Spline Viewer Background */
+        spline-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+    
+
+        /* Animated Background with Parallax */
+        .background-english {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 10px, transparent 11px),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 15px, transparent 16px),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.03) 8px, transparent 9px);
+            animation: cloudDrift 20s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes cloudDrift {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Game World Container */
+        #game-world {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        /* Title Box with Neon Slide-In Animation */
+        .title-box {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(16, 8, 35, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff69b4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-box h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            color: #ff69b4;
+            text-shadow: 0 0 10px #ff69b4, 0 0 20px #9400d3, 0 0 30px #4169e1;
+            margin-bottom: 10px;
+            animation: neonSlideIn 2s ease-out forwards, neonFlicker 6s ease-in-out infinite;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        @keyframes neonSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes neonFlicker {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff69b4, 0 0 20px #9400d3, 0 0 30px #4169e1;
+            }
+            10%, 30% {
+                text-shadow: 0 0 20px #ff69b4, 0 0 40px #9400d3, 0 0 50px #4169e1;
+            }
+            20% {
+                text-shadow: 0 0 5px #ff69b4, 0 0 10px #9400d3, 0 0 15px #4169e1;
+            }
+        }
+
+        .quest-text {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #87ceeb;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Card Zone Container */
+        .card-zone {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 900px; /* Fits 3 cards with 280px width and 20px gaps */
+        }
+
+        /* Card Styles with Entry Animation */
+        .card {
+            background: linear-gradient(135deg, rgba(16, 8, 35, 0.85), rgba(0, 0, 0, 0.7));
+            border: 2px solid rgba(255, 105, 180, 0.6);
+            border-radius: 15px;
+            width: 280px;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: perspective(1000px) rotateY(90deg) translateX(0);
+            animation: cardFlipIn 0.8s ease-out forwards;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0s;
+            transform-origin: left;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.3s;
+            transform-origin: center;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.6s;
+            transform-origin: right;
+        }
+
+        @keyframes cardFlipIn {
+            0% {
+                opacity: 0;
+                transform: perspective(1000px) rotateY(90deg) translateX(0);
+            }
+            50% {
+                opacity: 0.5;
+                transform: perspective(1000px) rotateY(0deg) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(1000px) rotateY(0deg) scale(1);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px) perspective(1000px) rotateY(0deg) scale(1);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 105, 180, 0.4);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.6);
+            position: relative;
+        }
+
+        .card img::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(120deg, rgba(255, 105, 180, 0) 30%, rgba(255, 105, 180, 0.4) 50%, rgba(255, 105, 180, 0) 70%);
+            animation: shimmerGlare 2s infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover img::before {
+            opacity: 0.8;
+        }
+
+        @keyframes shimmerGlare {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* Fallback for missing images */
+        .card img:not([src])::before {
+            content: "Image not found";
+            display: block;
+            color: #ff69b4;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            text-align: center;
+            padding-top: 80px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Neon Light Button Animation */
+        .card a {
+            text-decoration: none;
+            color: #ff69b4;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.3rem;
+            padding: 15px;
+            display: block;
+            width: 100%;
+            background: rgba(16, 8, 35, 0.9);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff69b4;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s, background 0.3s;
+            z-index: 1;
+        }
+
+        .card a::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.3) 10%, transparent 70%);
+            animation: neonPulse 1.5s ease-out infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card a:hover::before {
+            opacity: 1;
+        }
+
+        .card a:hover {
+            color: #87ceeb;
+            background: rgba(148, 0, 211, 0.9);
+        }
+
+        @keyframes neonPulse {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .card-zone {
+                flex-direction: column;
+                align-items: center;
+                max-width: 280px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #game-world {
+                padding: 15px;
+            }
+
+            .title-box {
+                padding: 15px;
+                margin-bottom: 30px;
+            }
+
+            .card {
+                width: 90%;
+                max-width: 280px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Background Scene -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
+    <spline-viewer url="https://prod.spline.design/HDWKv9GsXJhOPO5h/scene.splinecode"></spline-viewer>
+    
+    <!-- Game Content -->
+    <div id="game-world">
+        <div class="background-english"></div>
+        <div class="title-box">
+            <h1>Crossword & Quiz Adventure</h1>
+            <p class="quest-text">Interactive Games to Power Up Your English with T5!</p>
+        </div>
+        <div class="card-zone">
+            <div class="card">
+                <img src="/pap/st.png" alt="Teacher's Word Wand" onerror="this.src='https://via.placeholder.com/280x250.png?text=Teacher+Image+Not+Found';">
+                <a href="user_input.html">Teacher's Word Wand</a>
+            </div>
+            <div class="card">
+                <img src="/pap/std.png" alt="Student's Puzzle Map" onerror="this.src='https://via.placeholder.com/280x250.png?text=Student+Image+Not+Found';">
+                <a href="user_key_input.html">Student's Puzzle Map</a>
+            </div>
+            <div class="card">
+                <img src="/pap/ch.png" alt="Hall of Champions" onerror="this.src='https://via.placeholder.com/280x250.png?text=Champion+Image+Not+Found';">
+                <a href="leaderboard.html">Hall of Champions</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

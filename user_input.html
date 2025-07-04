@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Question Generation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="./css/user_input.css">
+</head>
+<body>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.96/build/spline-viewer.js"></script>
+    <spline-viewer url="https://prod.spline.design/sz9A5ILZ4GwrvPlI/scene.splinecode"></spline-viewer>
+    <div class="background-english"></div>
+    <div id="container">
+        <div class="text-input">
+            <h1>Generate Question and Answer From Text</h1>
+        </div>
+        <select id="exampleDropdown" onchange="loadExample()">
+            <option value="">Select a story</option>
+            <option value="example1">Grade 3 Unit 1</option>
+            <option value="example2">Grade 3 Unit 2</option>
+            <option value="example3">Grade 3 Unit 3</option>
+            <option value="example4">Grade 3 Unit 4</option>
+            <option value="example5">Grade 3 Unit 5</option>
+            <option value="example6">Grade 3 Unit 6</option>
+            <option value="example7">Grade 3 Unit 7</option>
+
+        </select>
+        <textarea id="contextInput" placeholder="" readonly></textarea>
+        <button id="generateButton" onclick="generateQuestions()">Generate</button>
+    </div>
+    <div id="spinner" class="loader"></div>
+    <script src="./js/generate_question_answer.js"></script>
+    <script src="./js/load_example.js"></script>
+</body>
+</html>

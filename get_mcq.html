@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Data</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start+2P&display=swap">
+    <link href="./css/get_mcq.css" rel="stylesheet">
+</head>
+<body>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.98/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/UBWtNCBOsQZypcOj/scene.splinecode"></spline-viewer>
+    <div class="text-input">
+    <h1>Generated Multiple Choice Quiz</h1>
+  </div>
+  <textarea id="key" style="display: none;"></textarea>
+  <textarea id="val" style="display: none;"></textarea>
+
+  <div id ="nameStudent"></div>
+  <div id ="keyGenerated"></div>
+  <div id="passageResult"></div>
+  <div id="mcqQuestions"></div>
+  <div id="button-container">
+    <button id="checkMCQCondition" onclick="submitMCQAnswers()">Submit</button>
+  </div>
+
+  <div id="mcqIsFinishedModal" class="modal">
+    <div class="modal-content">
+        <h2>Good Job!</h2>
+        <button id="mcqIsFinishedModalOkayButton">Okay</button>
+        <button id="viewLeaderboard" style="margin-top: 1%;">View Leaderboard</button>
+    </div>
+  </div>
+
+  <!-- Modal: MCQ not fully answered -->
+  <div id="mcqUnansweredModal" class="modal">
+    <div class="modal-content">
+      <h2>Please answer all questions before submitting</h2>
+      <button id="mcqUnansweredOkayBtn">Okay</button>
+    </div>
+  </div>
+
+  <!-- Modal: General error or empty input -->
+  <div id="mcqIsEmpty" class="modal">
+    <div class="modal-content">
+      <h2>Something went wrong. Please refresh.</h2>
+      <button id="okayButtonEmpty">Okay</button>
+    </div>
+  </div>
+
+    <script src="./js/display_question_answer_mcq.js"></script>
+</body>
+</html>
