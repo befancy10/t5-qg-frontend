@@ -239,7 +239,7 @@ function fetchLeaderboard() {
     document.getElementById('overlayTitle').textContent = modalTitle;
     document.getElementById('overlayKey').textContent = `Key: ${inputKey}`;
 
-    fetch(leaderboardEndpoint)
+    fetch(CONFIG.getRailwayURL(leaderboardEndpoint))
         .then(response => {
             console.log('Response status:', response.status);
             if (!response.ok) {
