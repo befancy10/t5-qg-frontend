@@ -19,7 +19,8 @@ function fetchKeyAndName() {
     const checkEndpoint = isMCQ ? '/check-mcq-name' : '/check-name';
 
     // Check if the name already exists in the database
-    fetch(`${checkEndpoint}/${inputName}/${inputKey}`)
+    // UPDATED: Use CONFIG.getRailwayURL() for Railway backend calls
+    fetch(CONFIG.getRailwayURL(`${checkEndpoint}/${inputName}/${inputKey}`))
         .then(response => {
             console.log('Response status:', response.status);
             console.log('Response:', response);
@@ -56,7 +57,8 @@ function fetchKeyAndName() {
         const isMCQ = key.charAt(0) === 'm';
         const endpoint = isMCQ ? '/save-mcq-name' : '/save-name';
 
-        fetch(endpoint, {
+        // UPDATED: Use CONFIG.getRailwayURL() for Railway backend calls
+        fetch(CONFIG.getRailwayURL(endpoint), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -89,7 +91,8 @@ function fetchKeyAndName() {
         const type = key.charAt(0).toLowerCase();
       
         if (type === 'c') {
-          fetch(`/check-key/${key}`)
+          // UPDATED: Use CONFIG.getRailwayURL() for Railway backend calls
+          fetch(CONFIG.getRailwayURL(`/check-key/${key}`))
             .then(res => res.json())
             .then(data => {
               if (data.found) {
@@ -120,7 +123,8 @@ function fetchKeyAndName() {
               }
             });
         } else if (type === 'm') {
-          fetch(`/check-mcq/${key}`)
+          // UPDATED: Use CONFIG.getRailwayURL() for Railway backend calls
+          fetch(CONFIG.getRailwayURL(`/check-mcq/${key}`))
             .then(res => res.json())
             .then(data => {
               if (data.found) {

@@ -621,7 +621,7 @@
               return;
             }
 
-            fetch("/update-is-done", {
+            fetch(CONFIG.getRailwayURL("/update-is-done"), {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

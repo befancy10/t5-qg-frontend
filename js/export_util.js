@@ -27,7 +27,7 @@ async function generateRandomKeyWithPrefix(prefix, length = 8) {
     }
     key = prefix + randomPart;
 
-    const response = await fetch(`/check-key-availability/${key}`);
+    const response = await fetch(CONFIG.getRailwayURL(`/check-key-availability/${key}`));
     const data = await response.json();
     isUnique = data.available;
   }

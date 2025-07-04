@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         loadMCQData();
     } else {
         // Ambil dari server
-        fetch(`/check-mcq/${key}`)
+        fetch(CONFIG.getRailwayURL(`/check-mcq/${key}`))
         .then(res => res.json())
         .then(data => {
             if (!data.found) {
@@ -61,7 +61,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 async function checkMCQNameExists(name, key) {
     try {
-        const res = await fetch(`/check-mcq-name/${name}/${key}`);
+        const res = await fetch(CONFIG.getRailwayURL(`/check-mcq-name/${name}/${key}`));
         const data = await res.json();
         return data.found === true;
     } catch (err) {
@@ -72,7 +72,7 @@ async function checkMCQNameExists(name, key) {
 
 // Fungsi menyimpan nama ke leaderboard MCQ
 function saveMCQName(name, key) {
-    fetch('/save-mcq-name', {
+    fetch(CONFIG.getRailwayURL('/save-mcq-name'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, key })
@@ -193,7 +193,7 @@ async function submitMCQAnswers() {
     };
 
     try {
-        const res = await fetch('/update-mcq-result', {
+        const res = await fetch(CONFIG.getRailwayURL('/update-mcq-result'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(saveResult)

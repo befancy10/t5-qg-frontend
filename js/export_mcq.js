@@ -33,7 +33,7 @@ async function exportMCQData() {
   };
 
   try {
-    const response = await fetch('/export_mcq_data', {
+    const response = await fetch(CONFIG.getRailwayURL('/export_mcq_data'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -263,7 +263,8 @@ document.getElementById('gen_mcq').addEventListener('click', async function () {
     try {
         console.log(`Calling enhanced distractor API with context: "${context.substring(0, 100)}..." and answer: "${correctAnswer}"`);
         
-        const response = await fetch('http://127.0.0.1:5000/generate-distractors', {
+        // UPDATED: Use Vercel proxy instead of direct HF Spaces call
+        const response = await fetch('/api/generate-distractors', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

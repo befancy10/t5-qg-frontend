@@ -45,7 +45,7 @@ async function exportCrosswordData() {
   console.log(dataToExport);
 
   try {
-    const response = await fetch('/display_question_answer', {
+    const response = await fetch(CONFIG.getRailwayURL('/display_question_answer'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
