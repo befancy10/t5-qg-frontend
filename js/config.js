@@ -41,7 +41,7 @@ async function fetchHFSpaces(endpoint, options, maxRetries = 2) {
             const timeoutMs = 180000 + (attempt * 60000); // 3, 4, 5 minutes
             
             if (attempt === 1) {
-                showLoadingMessage('🤖 Connecting to AI model...');
+                showLoadingMessage('Connecting to AI model...');
             } else {
                 showLoadingMessage(`AI model is starting up... Attempt ${attempt}/${maxRetries}<br><small>This can take up to 5 minutes on first use</small>`);
             }
@@ -63,11 +63,11 @@ async function fetchHFSpaces(endpoint, options, maxRetries = 2) {
             }
             
         } catch (error) {
-            console.log(`❌ Attempt ${attempt} failed:`, error.message);
+            console.log(`Attempt ${attempt} failed:`, error.message);
             
             // If it's a timeout and not the last attempt, continue
             if (error.name === 'TimeoutError' && attempt < maxRetries) {
-                showLoadingMessage(`⏰ Timeout on attempt ${attempt}. Trying again with longer timeout...<br><small>AI model is loading, please be patient</small>`);
+                showLoadingMessage(`Timeout on attempt ${attempt}. Trying again with longer timeout...<br><small>AI model is loading, please be patient</small>`);
                 await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5s between retries
                 continue;
             }
