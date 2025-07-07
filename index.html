@@ -4,313 +4,37 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Landing Page - Question Generation Model</title>
+    <title>Landing Page - Final Task Website</title>
+    <link href="./dist/css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600,700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* BASE & RESET */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        /* 1. PASTIKAN BODY BETUL-BETUL PUTIH DAN TIDAK BISA DI-SCROLL */
-        body {
-            background-color: #ffffff !important; /* Putih murni, !important untuk override */
-            background-image: none !important; /* HAPUS SEMUA GAMBAR LATAR BELAKANG */
-            height: 100vh !important; /* Tinggi 100% dari viewport */
-            overflow: hidden !important; /* Mencegah scroll */
-            margin: 0 !important;
-            padding: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            font-family: 'IBM Plex Sans', sans-serif !important;
-            color: #333333 !important;
-            line-height: 1.6 !important;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* 1. PASTIKAN SEMUA CONTAINER ORANG TUA/ANAK TRANSPRAN */
-        /* Ini adalah kunci untuk menghilangkan lapisan abu-abu solid */
-        .body-wrap,
-        .hero,
-        .hero-inner,
-        .container,
-        .hero-copy {
-            background-color: transparent !important;
-            background-image: none !important; /* Hapus juga background-image dari container */
-        }
-
-        /* BODY WRAP - CONTAINER UTAMA UNTUL SELURUH KONTEN */
-        .body-wrap {
-            flex-grow: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important; /* Distribusi vertikal merata */
-            align-items: center !important; /* Pusatkan horizontal */
-            padding: 0 20px !important; /* Padding horizontal */
-            width: 100% !important;
-            height: 100% !important; /* Memastikan mengisi sisa ruang */
-        }
-
-        /* HEADER - LOGO DI TENGAH ATAS DENGAN SHADOW HALUS SEBAGAI PEMISAH */
-        .site-header {
-            width: 100% !important;
-            padding: 15px 0 !important; /* Sedikit lebih ringkas untuk menghemat ruang vertikal */
-            z-index: 100 !important;
-            background-color: transparent !important;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05) !important;
-        }
-
-        .site-header-inner {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            width: 100% !important;
-        }
-
-        .brand.header-brand {
-            margin: 0 !important;
-        }
-
-        .header-logo-image {
-            display: block !important;
-            margin: 0 auto !important;
-            width: 80px !important;
-            height: auto !important;
-            opacity: 0.8 !important;
-        }
-
-        /* MAIN SECTION - KONTEN UTAMA DENGAN LOGO WATERMARK */
-        main {
-            display: flex !important;
-            flex-grow: 1 !important;
-            justify-content: center !important;
-            align-items: center !important;
-            width: 100% !important;
-            position: relative !important;
-            padding: 20px 20px !important; /* Mengurangi padding vertikal untuk menghemat ruang */
-            min-height: 0 !important; /* Memastikan tidak ada min-height yang berlebihan */
-        }
-
-        /* DIV KHUSUS UNTUK LOGO WATERMARK */
-        .watermark-logo {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background-image: url('dist/images/logoits.png') !important; /* PATH KE LOGO ANDA */
-            background-repeat: no-repeat !important;
-            background-position: center !important; /* Pusatkan logo di tengah container main */
-            background-size: 55% !important; /* Ukuran logo watermark, sesuaikan jika perlu */
-            opacity: 0.03 !important; /* Ketipisan logo */
-            filter: grayscale(100%) brightness(200%) !important; /* Filter untuk membuatnya abu-abu terang */
-            z-index: -1 !important; /* PASTIKAN DI BELAKANG SEMUA KONTEN */
-            pointer-events: none !important; /* KUNCI AGAR LOGO TIDAK MENGHALANGI KLIK */
-        }
-
-        .hero {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            text-align: center !important;
-            max-width: 800px !important;
-            width: 100% !important;
-            padding: 0 !important;
-        }
-
-        .hero-inner {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            padding: 0 !important;
-            background-color: transparent !important;
-        }
-
-        /* HERO COPY - TEKS JUDUL & PARAGRAF */
-        .hero-copy {
-            max-width: 650px !important;
-            margin: 0 auto !important;
-            padding: 0 !important;
-        }
-
-        .hero-title {
-            font-size: 2.3em !important; /* Ukuran judul */
-            font-weight: 700 !important;
-            color: #222222 !important;
-            line-height: 1.25 !important;
-            margin-top: 0 !important;
-            margin-bottom: 25px !important;
-            letter-spacing: -0.01em !important;
-        }
-
-        .hero-paragraph {
-            font-size: 1.05em !important;
-            color: #555555 !important;
-            line-height: 1.6 !important;
-            margin-bottom: 20px !important;
-        }
-
-        .hero-paragraph a {
-            color: #007bff !important;
-            text-decoration: none !important;
-            font-weight: 500 !important;
-            transition: color 0.2s ease !important;
-        }
-
-        .hero-paragraph a:hover {
-            color: #0056b3 !important;
-            text-decoration: underline !important;
-        }
-
-        /* CALL TO ACTION BUTTON */
-        .hero-cta {
-            margin-top: 20px !important;
-        }
-
-        .hero-cta .button {
-            display: inline-block !important;
-            background-color: #007bff !important;
-            color: #ffffff !important;
-            padding: 14px 35px !important;
-            border-radius: 6px !important;
-            text-decoration: none !important;
-            font-size: 1.05em !important;
-            font-weight: 600 !important;
-            border: none !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 5px 12px rgba(0, 123, 255, 0.2) !important;
-        }
-
-        .hero-cta .button:hover {
-            background-color: #0056b3 !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.25) !important;
-        }
-
-        .hero-cta .button:active {
-            transform: translateY(0) !important;
-            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.15) !important;
-        }
-
-        /* 2. INFORMASI PENULIS (FOOTER) - PASTI TIDAK TERPOTONG */
-        .footer-credits {
-            width: 100% !important;
-            text-align: center !important;
-            padding: 15px 20px !important; /* Mengurangi padding untuk menghemat ruang */
-            color: #3d3d3d !important;
-            font-size: 0.9em !important;
-            line-height: 1.4 !important;
-        }
-
-        .footer-credits p {
-            margin: 3px 0 !important;
-        }
-
-        .footer-credits a {
-            color: #3d3d3d !important;
-            text-decoration: none !important;
-            font-weight: 500 !important;
-            transition: color 0.2s ease !important;
-        }
-
-        .footer-credits a:hover {
-            color: #007bff  !important;
-            text-decoration: underline !important;
-        }
-
-        /* MEDIA QUERIES UNTUK RESPONSIFITAS */
-        @media (max-width: 768px) {
-            .site-header {
-                padding: 12px 0 !important; /* Lebih kecil lagi */
-            }
-            .header-logo-image {
-                width: 65px !important;
-            }
-            main {
-                padding: 15px 15px !important;
-            }
-            .watermark-logo {
-                background-size: 70% !important;
-                background-position: center !important; /* Kembali ke tengah sempurna di mobile */
-            }
-            .hero-title {
-                font-size: 1.8em !important; /* Lebih kecil */
-                margin-bottom: 18px !important;
-            }
-            .hero-paragraph {
-                font-size: 0.95em !important;
-                margin-bottom: 12px !important;
-            }
-            .hero-cta .button {
-                padding: 10px 25px !important;
-                font-size: 0.95em !important;
-            }
-            .footer-credits {
-                padding: 10px 15px !important;
-                font-size: 0.7em !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .site-header {
-                padding: 8px 0 !important;
-            }
-            .header-logo-image {
-                width: 50px !important;
-            }
-            main {
-                padding: 10px 10px !important;
-            }
-            .watermark-logo {
-                background-size: 80% !important;
-            }
-            .hero-title {
-                font-size: 1.5em !important;
-                margin-bottom: 10px !important;
-            }
-            .hero-paragraph {
-                font-size: 0.85em !important;
-                margin-bottom: 8px !important;
-            }
-            .hero-cta .button {
-                padding: 8px 20px !important;
-                font-size: 0.85em !important;
-            }
-            .footer-credits {
-                padding: 8px 10px !important;
-                font-size: 0.65em !important;
-            }
-        }
-
-    </style>
-    </head>
+</head>
 <body class="is-boxed has-animations">
     <div class="body-wrap">
         <header class="site-header">
             <div class="container">
                 <div class="site-header-inner">
                     <div class="brand header-brand">
-                        <h1 class="m-0">
-                            <a href="https://www.its.ac.id/" target="_blank" rel="noopener noreferrer">
-                                <img class="header-logo-image" src="dist/images/logoits.png" alt="ITS Logo">
-                            </a>
-                        </h1>
+                        <a href="https://www.its.ac.id/" target="_blank" rel="noopener noreferrer">
+                            <img class="header-logo-image" src="dist/images/logoits.png" alt="ITS Logo">
+                        </a>
+                    </div>
+                    <div class="brand second-brand">
+                        <a href="https://www.its.ac.id/informatika/id/tentang-kami/" target="_blank" rel="noopener noreferrer">
+                            <img class="header-logo-image second-logo" src="dist/images/tc.png" alt="Logo Kedua">
+                        </a>
                     </div>
                 </div>
             </div>
         </header>
         <main>
             <div class="watermark-logo"></div>
-            
             <section class="hero">
                 <div class="container">
                     <div class="hero-inner">
                         <div class="hero-copy">
                             <h1 class="hero-title mt-0">MAKE CROSSWORD PUZZLE AND MULTIPLE CHOICE QUIZ FROM TEXT</h1>
-                            <p class="hero-paragraph">Model for Question Generation is made with <a href="https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf" target="_blank" rel="noopener noreferrer">Transformer</a> architecture <a href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf" target="_blank" rel="noopener noreferrer">T5-Base pre-trained model</a> that is fine-tuned with <a href="https://arxiv.org/pdf/1606.05250" target="_blank" rel="noopener noreferrer">New Dataset for 3rd and 4th Grade Elementary School based on Kurikulum Merdeka</a></p>
+                            <p class="hero-paragraph">Model for Question Generation is made with <a href="https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf" target="_blank" rel="noopener noreferrer">Transformer</a> architecture <a href="https://www.jmlr.org/papers/volume21/20-074/20-074.pdf" target="_blank" rel="noopener noreferrer">T5-Base pre-trained model</a> that is fine-tuned with
+                                <a href="https://docs.google.com/spreadsheets/d/1dSClixRfeJ0-lvMu-vGV6qBOBLbwTmb2z77ECXMjcuA/edit?usp=sharing" target="_blank" rel="noopener noreferrer">New Dataset for 3rd and 4th Grade Elementary School based on Kurikulum Merdeka</a> and optimized hyperparameters with <a href="https://arxiv.org/pdf/1907.10902" target="_blank" rel="noopener noreferrer">Optuna</a></p>
                             <div class="hero-cta"><a class="button" href="select_role.html">Play Now</a></div>
                         </div>
                     </div>
