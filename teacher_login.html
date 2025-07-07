@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Teacher Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Press+Start 2P&display=swap">
+    <link rel="stylesheet" href="./css/teacher_login.css">
+</head>
+<body>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.97/build/spline-viewer.js"></script>
+    <spline-viewer url="https://prod.spline.design/Q7N2hNd3WKtU0o5y/scene.splinecode"></spline-viewer>
+    <div class="background-english"></div>
+    <button class="back-button" id="backButton">← Back</button>
+    <div id="container">
+        <div class="text-input">
+            <h1>Teacher Login</h1>
+            <!--  asdasdasd -->
+        </div>
+        <input type="text" id="usernameInput" placeholder="Input username and password below" autocomplete="off">
+        <div class="key-input-grid password-input-grid">
+            <input type="password" class="password-input" id="passwordBox1" maxlength="1" placeholder="-">
+            <input type="password" class="password-input" id="passwordBox2" maxlength="1" placeholder="-">
+            <input type="password" class="password-input" id="passwordBox3" maxlength="1" placeholder="-">
+            <input type="password" class="password-input" id="passwordBox4" maxlength="1" placeholder="-">
+            <button type="button" class="toggle-password-btn" id="togglePasswordBtn" title="Show/Hide Password">Show</button>
+        </div>
+
+        <button type="button" id="loginButton">Login</button>
+    </div>
+    <div id="spinner" class="loader"></div>
+
+    <div id="messageModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button id="modalOkayBtn">OK</button>
+        </div>
+    </div>
+
+    <script src="./js/teacher_login_handler.js"></script>
+</body>
+</html>
